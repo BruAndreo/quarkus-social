@@ -1,9 +1,12 @@
 package io.github.bruandreo.quarkussocial.domain.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
 
     @Id
@@ -15,24 +18,4 @@ public class User {
 
     @Column(name = "age")
     private int age;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

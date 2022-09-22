@@ -19,8 +19,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
-    private UserRepository repository;
-    private Validator validator;
+    private final UserRepository repository;
+    private final Validator validator;
 
     @Inject
     public UserResource(UserRepository repository, Validator validator) {
