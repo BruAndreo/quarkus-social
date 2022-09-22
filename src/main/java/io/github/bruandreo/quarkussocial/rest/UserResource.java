@@ -3,10 +3,12 @@ package io.github.bruandreo.quarkussocial.rest;
 import io.github.bruandreo.quarkussocial.domain.model.User;
 import io.github.bruandreo.quarkussocial.domain.repository.UserRepository;
 import io.github.bruandreo.quarkussocial.rest.dto.CreateUserRequest;
+import io.github.bruandreo.quarkussocial.rest.dto.ResponseError;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,15 +20,24 @@ import java.util.List;
 public class UserResource {
 
     private UserRepository repository;
+    private Validator validator;
 
     @Inject
-    public UserResource(UserRepository repository) {
+    public UserResource(UserRepository repository, Validator validator) {
         this.repository = repository;
+        this.validator = validator;
     }
 
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest) {
+        var violations = validator.validate(userRequest);
+
+        if (!violations.isEmpty()) {
+            return ResponseError
+                    .createFromValidation(violations)
+                    .withStatusCode(ResponseError.UNPROCESSABLE_REQUEST_STATUS);
+        }
 
         var user = new User();
         user.setName(userRequest.getName());
@@ -34,7 +45,7 @@ public class UserResource {
 
         repository.persist(user);
 
-        return Response.ok(user).build();
+        return Response.status(Response.Status.CREATED).entity(user).build();
     }
 
     @GET
