@@ -1,11 +1,10 @@
-"%dev":
-  quarkus:
-    http:
-      port: 3000
-    datasource:
-      db-kind: postgresql
-      username: social_srv
-      password: s0c14l+s3rv1c3
-      jdbc:
-        url: jdbc:postgresql://localhost:5432/social_db
-        max-size: 16
+quarkus:
+  http:
+    port: 3000
+  datasource:
+    db-kind: postgresql
+    username: social_srv
+    password: s0c14l+s3rv1c3
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/social_db
+      max-size: 16
