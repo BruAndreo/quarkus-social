@@ -1,9 +1,11 @@
 package io.github.bruandreo.quarkussocial.rest;
 
 import io.github.bruandreo.quarkussocial.domain.model.User;
+import io.github.bruandreo.quarkussocial.domain.repository.UserRepository;
 import io.github.bruandreo.quarkussocial.rest.dto.CreateUserRequest;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,6 +17,13 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+    private UserRepository repository;
+
+    @Inject
+    public UserResource(UserRepository repository) {
+        this.repository = repository;
+    }
+
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest) {
@@ -23,14 +32,14 @@ public class UserResource {
         user.setName(userRequest.getName());
         user.setAge(userRequest.getAge());
 
-        user.persist();
+        repository.persist(user);
 
         return Response.ok(user).build();
     }
 
     @GET
     public Response listAllUsers() {
-        var users = User.findAll().list();
+        var users = repository.findAll().list();
 
         return Response.ok(users).build();
     }
@@ -59,7 +68,6 @@ public class UserResource {
 
         user.setName(userRequest.getName());
         user.setAge(userRequest.getAge());
-        user.persist();
 
         return Response.ok(user).build();
     }
@@ -69,13 +77,13 @@ public class UserResource {
     @Transactional
     public Response deleteUserById(@PathParam("id") Long id) {
         var user = getUser(id);
-        user.delete();
+        repository.delete(user);
 
         return Response.ok().build();
     }
 
     private User getUser(Long id) {
-        return User.findById(id);
+        return repository.findById(id);
     }
 
 }
