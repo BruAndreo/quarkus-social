@@ -1,6 +1,0 @@
-quarkus.datasource.db-kind=postgresql 
-quarkus.datasource.username=social_srv
-quarkus.datasource.password=s0c14l+s3rv1c3
-
-quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/social_db
-quarkus.datasource.jdbc.max-size=16
