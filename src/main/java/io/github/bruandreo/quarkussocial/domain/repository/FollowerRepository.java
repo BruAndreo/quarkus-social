@@ -6,6 +6,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
@@ -22,4 +23,7 @@ public class FollowerRepository implements PanacheRepository<Follower> {
         return result.isPresent();
     }
 
+    public List<Follower> findFollowersByUser(Long userId) {
+        return find("user.id", userId).list();
+    }
 }
