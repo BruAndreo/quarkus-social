@@ -1,9 +1,15 @@
 package io.github.bruandreo.quarkussocial.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "folowers")
+@Table(name = "followers")
+@Data
 public class Follower {
 
     @Id
@@ -15,7 +21,7 @@ public class Follower {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "follower_id")
     private User follower;
 
 }
