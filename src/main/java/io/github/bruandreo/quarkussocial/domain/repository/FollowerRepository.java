@@ -3,6 +3,7 @@ package io.github.bruandreo.quarkussocial.domain.repository;
 import io.github.bruandreo.quarkussocial.domain.model.Follower;
 import io.github.bruandreo.quarkussocial.domain.model.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
@@ -25,5 +26,15 @@ public class FollowerRepository implements PanacheRepository<Follower> {
 
     public List<Follower> findFollowersByUser(Long userId) {
         return find("user.id", userId).list();
+    }
+
+    public void deleteByFollowerAndUser(Long followerId, Long userId) {
+        var params = Parameters
+                .with("userId", userId)
+                .and("followerId", followerId)
+                .map();
+
+        delete("follower.id = :followerId and user.id = :userId", params);
+
     }
 }
