@@ -71,11 +71,11 @@ class UserResourceTest {
     @Order(3)
     public void listAllUsersTest() {
         given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(apiURL)
-                .then()
-                .statusCode(200)
-                .body("size()", Matchers.is(1));
+            .contentType(ContentType.JSON)
+        .when()
+            .get(apiURL)
+        .then()
+            .statusCode(200)
+            .body("size()", Matchers.is(1));
     }
 }
