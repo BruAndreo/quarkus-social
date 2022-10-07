@@ -8,3 +8,11 @@ quarkus:
     jdbc:
       url: jdbc:postgresql://localhost:5432/social_db
       max-size: 16
+  swagger-ui:
+    always-include: true
+    path: /swagger
+  smallrye-openapi:
+    path: /openapi
+    info-title: Quarkus Social API Doc
+    info-version: 1.0.0
+    info-description: Quarkus social is an API to practice JAVA with Quarkus
