@@ -5,6 +5,11 @@ import io.github.bruandreo.quarkussocial.domain.repository.UserRepository;
 import io.github.bruandreo.quarkussocial.rest.dto.CreateUserRequest;
 import io.github.bruandreo.quarkussocial.rest.dto.ResponseError;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.vertx.core.cli.annotations.Description;
+import io.vertx.core.cli.annotations.Summary;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.openapi.annotations.tags.Tags;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -29,6 +34,7 @@ public class UserResource {
     }
 
     @POST
+    @Operation(summary = "Create an user")
     @Transactional
     public Response createUser(CreateUserRequest userRequest) {
         var violations = validator.validate(userRequest);
@@ -49,6 +55,7 @@ public class UserResource {
     }
 
     @GET
+    @Operation(summary = "List all users")
     public Response listAllUsers() {
         var users = repository.findAll().list();
 
@@ -56,6 +63,7 @@ public class UserResource {
     }
 
     @GET
+    @Operation(summary = "Get an user by ID")
     @Path("{id}")
     public Response getUserById(@PathParam("id") Long id) {
         var user = getUser(id);
