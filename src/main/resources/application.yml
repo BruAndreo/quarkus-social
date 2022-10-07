@@ -11,6 +11,7 @@ quarkus:
   swagger-ui:
     always-include: true
     path: /swagger
+    theme: outline
   smallrye-openapi:
     path: /openapi
     info-title: Quarkus Social API Doc
